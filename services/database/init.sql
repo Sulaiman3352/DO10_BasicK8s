@@ -1,0 +1,17 @@
+DROP DATABASE IF EXISTS users_db;
+CREATE DATABASE users_db;
+
+DROP DATABASE IF EXISTS hotels_db;
+CREATE DATABASE hotels_db;
+
+DROP DATABASE IF EXISTS reservations_db;
+CREATE DATABASE reservations_db;
+
+DROP DATABASE IF EXISTS payments_db;
+CREATE DATABASE payments_db;
+
+DROP DATABASE IF EXISTS balances_db;
+CREATE DATABASE balances_db;
+
+DROP DATABASE IF EXISTS statistics_db;
+CREATE DATABASE statistics_db;

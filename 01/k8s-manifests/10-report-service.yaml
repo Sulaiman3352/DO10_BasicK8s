@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: report-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: report-service }
+  template:
+    metadata:
+      labels: { app: report-service }
+    spec:
+      containers:
+      - name: report-service
+        image: report-service:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8086
+        envFrom:
+        - configMapRef: { name: app-config }
+        - secretRef: { name: app-secrets }
+        env:
+        - name: POSTGRES_DB
+          value: "statistics_db"
+        - name: JAVA_TOOL_OPTIONS
+          value: "-Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m"
+        resources:
+          limits:
+            memory: "512Mi"
+          requests:
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: report-service
+spec:
+  selector: { app: report-service }
+  ports:
+  - port: 8086
+    targetPort: 8086

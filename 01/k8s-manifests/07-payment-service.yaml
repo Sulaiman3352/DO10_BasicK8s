@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: payment-service }
+  template:
+    metadata:
+      labels: { app: payment-service }
+    spec:
+      containers:
+      - name: payment-service
+        image: payment-service:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8084
+        envFrom:
+        - configMapRef: { name: app-config }
+        - secretRef: { name: app-secrets }
+        env:
+        - name: POSTGRES_DB
+          value: "payments_db"
+        - name: JAVA_TOOL_OPTIONS
+          value: "-Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m"
+        resources:
+          limits:
+            memory: "512Mi"
+          requests:
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+spec:
+  selector: { app: payment-service }
+  ports:
+  - port: 8084
+    targetPort: 8084

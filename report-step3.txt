@@ -1,0 +1,1251 @@
+==================================================
+CONFIGMAPS
+==================================================
+NAME               DATA   AGE
+app-config         18     25h
+kube-root-ca.crt   1      31h
+postgres-init      1      25h
+
+--- describe configmap app-config ---
+Name:         app-config
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+BOOKING_SERVICE_HOST:
+----
+booking-service
+
+BOOKING_SERVICE_PORT:
+----
+8083
+
+HOTEL_SERVICE_HOST:
+----
+hotel-service
+
+HOTEL_SERVICE_PORT:
+----
+8082
+
+LOYALTY_SERVICE_HOST:
+----
+loyalty-service
+
+LOYALTY_SERVICE_PORT:
+----
+8085
+
+PAYMENT_SERVICE_HOST:
+----
+payment-service
+
+PAYMENT_SERVICE_PORT:
+----
+8084
+
+POSTGRES_HOST:
+----
+postgres
+
+POSTGRES_PORT:
+----
+5432
+
+RABBIT_MQ_EXCHANGE:
+----
+reportExchange
+
+RABBIT_MQ_HOST:
+----
+rabbitmq
+
+RABBIT_MQ_PORT:
+----
+5672
+
+RABBIT_MQ_QUEUE_NAME:
+----
+reportQueue
+
+REPORT_SERVICE_HOST:
+----
+report-service
+
+REPORT_SERVICE_PORT:
+----
+8086
+
+SESSION_SERVICE_HOST:
+----
+session-service
+
+SESSION_SERVICE_PORT:
+----
+8081
+
+
+BinaryData
+====
+
+Events:  <none>
+
+--- describe configmap postgres-init ---
+Name:         postgres-init
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+init.sql:
+----
+DROP DATABASE IF EXISTS users_db;
+CREATE DATABASE users_db;
+DROP DATABASE IF EXISTS hotels_db;
+CREATE DATABASE hotels_db;
+DROP DATABASE IF EXISTS reservations_db;
+CREATE DATABASE reservations_db;
+DROP DATABASE IF EXISTS payments_db;
+CREATE DATABASE payments_db;
+DROP DATABASE IF EXISTS balances_db;
+CREATE DATABASE balances_db;
+DROP DATABASE IF EXISTS statistics_db;
+CREATE DATABASE statistics_db;
+
+
+
+BinaryData
+====
+
+Events:  <none>
+
+==================================================
+SECRETS
+==================================================
+NAME          TYPE     DATA   AGE
+app-secrets   Opaque   8      32m
+
+--- describe secret app-secrets ---
+Name:         app-secrets
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Type:  Opaque
+
+Data
+====
+BOOKING_SERVICE_UUID:   36 bytes
+GATEWAY_SERVICE_UUID:   36 bytes
+JWT_PRIVATE_KEY_VALUE:  1624 bytes
+JWT_PUBLIC_KEY_VALUE:   392 bytes
+POSTGRES_PASSWORD:      8 bytes
+POSTGRES_USER:          8 bytes
+RABBIT_MQ_PASSWORD:     5 bytes
+RABBIT_MQ_USER:         5 bytes
+
+==================================================
+PODS
+==================================================
+NAME                               READY   STATUS    RESTARTS      AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+apache-7f5f9d6b55-lxvz7            1/1     Running   2 (23m ago)   30h   10.244.0.49   minikube   <none>           <none>
+booking-service-6fd9dfc95-jc7tg    1/1     Running   0             19m   10.244.0.72   minikube   <none>           <none>
+catalog-56d5b6f446-664j4           1/1     Running   2 (23m ago)   30h   10.244.0.47   minikube   <none>           <none>
+customer-99d48549d-v4qk2           1/1     Running   2 (23m ago)   30h   10.244.0.59   minikube   <none>           <none>
+gateway-service-85cb669c4c-8nrhn   1/1     Running   0             19m   10.244.0.69   minikube   <none>           <none>
+hotel-service-554fff86c-lrjzd      1/1     Running   0             19m   10.244.0.74   minikube   <none>           <none>
+loyalty-service-84887559f6-dsrjv   1/1     Running   0             19m   10.244.0.73   minikube   <none>           <none>
+order-779f66c67f-gttps             1/1     Running   2 (23m ago)   30h   10.244.0.48   minikube   <none>           <none>
+payment-service-76b7447b6f-pr5jj   1/1     Running   0             19m   10.244.0.71   minikube   <none>           <none>
+postgres-699bf956d5-8hcvg          1/1     Running   1 (23m ago)   25h   10.244.0.51   minikube   <none>           <none>
+rabbitmq-df57b6cb5-jpxhm           1/1     Running   1 (23m ago)   25h   10.244.0.60   minikube   <none>           <none>
+report-service-f84db764f-sqr7h     1/1     Running   0             19m   10.244.0.75   minikube   <none>           <none>
+session-service-688ff754f7-nfbsw   1/1     Running   0             19m   10.244.0.70   minikube   <none>           <none>
+
+--- describe pod/apache-7f5f9d6b55-lxvz7 ---
+Name:             apache-7f5f9d6b55-lxvz7
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 23 Apr 2026 17:39:06 +0300
+Labels:           pod-template-hash=7f5f9d6b55
+                  run=apache
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.49
+IPs:
+  IP:           10.244.0.49
+Controlled By:  ReplicaSet/apache-7f5f9d6b55
+Containers:
+  apache:
+    Container ID:   docker://ab8f3745f8a34fe0fc04c9e4e1587f03d36b745996fa23843d74f73b73b0df25
+    Image:          minivozhd/example-apache:latest
+    Image ID:       docker-pullable://minivozhd/example-apache@sha256:289dd0dfb071936678b16e47c6528cf8fa02083b60ce40c29e5d2f41e59447e3
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:11:17 +0300
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    137
+      Started:      Thu, 23 Apr 2026 19:46:11 +0300
+      Finished:     Sat, 25 Apr 2026 00:09:12 +0300
+    Ready:          True
+    Restart Count:  2
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-nf7fp (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-nf7fp:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason          Age   From     Message
+  ----    ------          ----  ----     -------
+  Normal  SandboxChanged  21m   kubelet  Pod sandbox changed, it will be killed and re-created.
+  Normal  Pulling         21m   kubelet  spec.containers{apache}: Pulling image "minivozhd/example-apache:latest"
+  Normal  Pulled          21m   kubelet  spec.containers{apache}: Successfully pulled image "minivozhd/example-apache:latest" in 1.959s (6.391s including waiting). Image size: 221157739 bytes.
+  Normal  Created         21m   kubelet  spec.containers{apache}: Container created
+  Normal  Started         21m   kubelet  spec.containers{apache}: Container started
+
+--- describe pod/booking-service-6fd9dfc95-jc7tg ---
+Name:             booking-service-6fd9dfc95-jc7tg
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 25 Apr 2026 00:12:58 +0300
+Labels:           app=booking-service
+                  pod-template-hash=6fd9dfc95
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-04-25T00:12:58+03:00
+Status:           Running
+IP:               10.244.0.72
+IPs:
+  IP:           10.244.0.72
+Controlled By:  ReplicaSet/booking-service-6fd9dfc95
+Containers:
+  booking-service:
+    Container ID:   docker://f0962878871bbb1195d4b407a9601201cc0e5f5cb26224ae4f67347e77a4f727
+    Image:          booking-service:v1
+    Image ID:       docker://sha256:9b45d698c475b15f7cdd80a6dd3ebdee3570e6140cf50bf0d88dda7197242756
+    Port:           8083/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:13:08 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      memory:  256Mi
+    Environment Variables from:
+      app-config   ConfigMap  Optional: false
+      app-secrets  Secret     Optional: false
+    Environment:
+      POSTGRES_DB:        reservations_db
+      JAVA_TOOL_OPTIONS:  -Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-b94hf (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-b94hf:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  19m   default-scheduler  Successfully assigned default/booking-service-6fd9dfc95-jc7tg to minikube
+  Normal  Pulled     19m   kubelet            spec.containers{booking-service}: Container image "booking-service:v1" already present on machine and can be accessed by the pod
+  Normal  Created    19m   kubelet            spec.containers{booking-service}: Container created
+  Normal  Started    19m   kubelet            spec.containers{booking-service}: Container started
+
+--- describe pod/catalog-56d5b6f446-664j4 ---
+Name:             catalog-56d5b6f446-664j4
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 23 Apr 2026 17:39:05 +0300
+Labels:           pod-template-hash=56d5b6f446
+                  run=catalog
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.47
+IPs:
+  IP:           10.244.0.47
+Controlled By:  ReplicaSet/catalog-56d5b6f446
+Containers:
+  catalog:
+    Container ID:   docker://f9c897e3923b3d32cd5e5cec3e66dc9942ad4a66edc1041d23d2fb8d57175d44
+    Image:          minivozhd/example-catalog:latest
+    Image ID:       docker-pullable://minivozhd/example-catalog@sha256:49ab82306862f6fd43a053c96ddd195b555fc1726ad4fe3349b7fd1074fa4294
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:11:12 +0300
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    137
+      Started:      Thu, 23 Apr 2026 19:46:17 +0300
+      Finished:     Sat, 25 Apr 2026 00:09:12 +0300
+    Ready:          True
+    Restart Count:  2
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x47zn (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-x47zn:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason          Age   From     Message
+  ----    ------          ----  ----     -------
+  Normal  SandboxChanged  21m   kubelet  Pod sandbox changed, it will be killed and re-created.
+  Normal  Pulling         21m   kubelet  spec.containers{catalog}: Pulling image "minivozhd/example-catalog:latest"
+  Normal  Pulled          21m   kubelet  spec.containers{catalog}: Successfully pulled image "minivozhd/example-catalog:latest" in 2.216s (2.217s including waiting). Image size: 322950469 bytes.
+  Normal  Created         21m   kubelet  spec.containers{catalog}: Container created
+  Normal  Started         21m   kubelet  spec.containers{catalog}: Container started
+
+--- describe pod/customer-99d48549d-v4qk2 ---
+Name:             customer-99d48549d-v4qk2
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 23 Apr 2026 17:39:05 +0300
+Labels:           pod-template-hash=99d48549d
+                  run=customer
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.59
+IPs:
+  IP:           10.244.0.59
+Controlled By:  ReplicaSet/customer-99d48549d
+Containers:
+  customer:
+    Container ID:   docker://f17f7340ee3fa2985c548363ca5f27ddd5a9a114b1757eb1b534e2955aa56bab
+    Image:          minivozhd/example-customers:latest
+    Image ID:       docker-pullable://minivozhd/example-customers@sha256:a00308cf6a0c804d555d361dc8934dd4fbe87a74988fd6d3c465622c947bbeff
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:11:19 +0300
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    137
+      Started:      Thu, 23 Apr 2026 19:46:14 +0300
+      Finished:     Sat, 25 Apr 2026 00:09:12 +0300
+    Ready:          True
+    Restart Count:  2
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-plpdk (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-plpdk:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason          Age   From     Message
+  ----    ------          ----  ----     -------
+  Normal  SandboxChanged  21m   kubelet  Pod sandbox changed, it will be killed and re-created.
+  Normal  Pulling         21m   kubelet  spec.containers{customer}: Pulling image "minivozhd/example-customers:latest"
+  Normal  Pulled          21m   kubelet  spec.containers{customer}: Successfully pulled image "minivozhd/example-customers:latest" in 2.275s (7.949s including waiting). Image size: 323043553 bytes.
+  Normal  Created         21m   kubelet  spec.containers{customer}: Container created
+  Normal  Started         21m   kubelet  spec.containers{customer}: Container started
+
+--- describe pod/gateway-service-85cb669c4c-8nrhn ---
+Name:             gateway-service-85cb669c4c-8nrhn
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 25 Apr 2026 00:12:38 +0300
+Labels:           app=gateway-service
+                  pod-template-hash=85cb669c4c
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.69
+IPs:
+  IP:           10.244.0.69
+Controlled By:  ReplicaSet/gateway-service-85cb669c4c
+Containers:
+  gateway-service:
+    Container ID:   docker://0f54d4c1a7f3b56276b28950be2e1e5641e62f03fca9643fb42932eee3c43544
+    Image:          gateway-service:v1
+    Image ID:       docker://sha256:a8bbf8f1f206d67282a4d056168285ec474594108ab74b5eccd8175d0026fea6
+    Port:           8087/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:12:48 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      memory:  256Mi
+    Environment Variables from:
+      app-config   ConfigMap  Optional: false
+      app-secrets  Secret     Optional: false
+    Environment:
+      JAVA_TOOL_OPTIONS:  -Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-r4trj (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-r4trj:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  19m   default-scheduler  Successfully assigned default/gateway-service-85cb669c4c-8nrhn to minikube
+  Normal  Pulled     19m   kubelet            spec.containers{gateway-service}: Container image "gateway-service:v1" already present on machine and can be accessed by the pod
+  Normal  Created    19m   kubelet            spec.containers{gateway-service}: Container created
+  Normal  Started    19m   kubelet            spec.containers{gateway-service}: Container started
+
+--- describe pod/hotel-service-554fff86c-lrjzd ---
+Name:             hotel-service-554fff86c-lrjzd
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 25 Apr 2026 00:12:58 +0300
+Labels:           app=hotel-service
+                  pod-template-hash=554fff86c
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-04-25T00:12:58+03:00
+Status:           Running
+IP:               10.244.0.74
+IPs:
+  IP:           10.244.0.74
+Controlled By:  ReplicaSet/hotel-service-554fff86c
+Containers:
+  hotel-service:
+    Container ID:   docker://7cedf84d502959510c1f7aeea1d3e0272a6e105598055ecc3e4b8a632c1e0e73
+    Image:          hotel-service:v1
+    Image ID:       docker://sha256:a84c81b9fcefe36709161c0a5b8b6e5f0acf9dfe48d415d1e8455c1b8b4ab8d0
+    Port:           8082/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:13:07 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      memory:  256Mi
+    Environment Variables from:
+      app-config   ConfigMap  Optional: false
+      app-secrets  Secret     Optional: false
+    Environment:
+      POSTGRES_DB:        hotels_db
+      JAVA_TOOL_OPTIONS:  -Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-qkbp9 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-qkbp9:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  19m   default-scheduler  Successfully assigned default/hotel-service-554fff86c-lrjzd to minikube
+  Normal  Pulled     19m   kubelet            spec.containers{hotel-service}: Container image "hotel-service:v1" already present on machine and can be accessed by the pod
+  Normal  Created    19m   kubelet            spec.containers{hotel-service}: Container created
+  Normal  Started    19m   kubelet            spec.containers{hotel-service}: Container started
+
+--- describe pod/loyalty-service-84887559f6-dsrjv ---
+Name:             loyalty-service-84887559f6-dsrjv
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 25 Apr 2026 00:12:59 +0300
+Labels:           app=loyalty-service
+                  pod-template-hash=84887559f6
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-04-25T00:12:58+03:00
+Status:           Running
+IP:               10.244.0.73
+IPs:
+  IP:           10.244.0.73
+Controlled By:  ReplicaSet/loyalty-service-84887559f6
+Containers:
+  loyalty-service:
+    Container ID:   docker://e3b33033bf744eff6344df5bb91659a3b0444a7e0e192fece2ea5c1dd9339dc9
+    Image:          loyalty-service:v1
+    Image ID:       docker://sha256:d8754e1a1e7dd4b65d71c15a1b526089bc2e5f0db9204d36643aa17711d674ac
+    Port:           8085/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:13:07 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      memory:  256Mi
+    Environment Variables from:
+      app-config   ConfigMap  Optional: false
+      app-secrets  Secret     Optional: false
+    Environment:
+      POSTGRES_DB:        balances_db
+      JAVA_TOOL_OPTIONS:  -Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-htlwc (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-htlwc:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  19m   default-scheduler  Successfully assigned default/loyalty-service-84887559f6-dsrjv to minikube
+  Normal  Pulled     19m   kubelet            spec.containers{loyalty-service}: Container image "loyalty-service:v1" already present on machine and can be accessed by the pod
+  Normal  Created    19m   kubelet            spec.containers{loyalty-service}: Container created
+  Normal  Started    19m   kubelet            spec.containers{loyalty-service}: Container started
+
+--- describe pod/order-779f66c67f-gttps ---
+Name:             order-779f66c67f-gttps
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 23 Apr 2026 17:39:06 +0300
+Labels:           pod-template-hash=779f66c67f
+                  run=order
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.48
+IPs:
+  IP:           10.244.0.48
+Controlled By:  ReplicaSet/order-779f66c67f
+Containers:
+  order:
+    Container ID:   docker://6fe2f3e050f2d9ea7c5717231a7b4c2e952bbe45334e75895c9fdb57b66861b0
+    Image:          minivozhd/example-order:latest
+    Image ID:       docker-pullable://minivozhd/example-order@sha256:6e0c492cc1c1a111dc22d6141a34e401e3be88f8aba40ea543ba06507fa7264c
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:11:15 +0300
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    137
+      Started:      Thu, 23 Apr 2026 19:46:20 +0300
+      Finished:     Sat, 25 Apr 2026 00:09:12 +0300
+    Ready:          True
+    Restart Count:  2
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-6lw5s (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-6lw5s:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason          Age   From     Message
+  ----    ------          ----  ----     -------
+  Normal  SandboxChanged  21m   kubelet  Pod sandbox changed, it will be killed and re-created.
+  Normal  Pulling         21m   kubelet  spec.containers{order}: Pulling image "minivozhd/example-order:latest"
+  Normal  Pulled          21m   kubelet  spec.containers{order}: Successfully pulled image "minivozhd/example-order:latest" in 2.515s (4.597s including waiting). Image size: 322963234 bytes.
+  Normal  Created         21m   kubelet  spec.containers{order}: Container created
+  Normal  Started         21m   kubelet  spec.containers{order}: Container started
+
+--- describe pod/payment-service-76b7447b6f-pr5jj ---
+Name:             payment-service-76b7447b6f-pr5jj
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 25 Apr 2026 00:12:58 +0300
+Labels:           app=payment-service
+                  pod-template-hash=76b7447b6f
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-04-25T00:12:58+03:00
+Status:           Running
+IP:               10.244.0.71
+IPs:
+  IP:           10.244.0.71
+Controlled By:  ReplicaSet/payment-service-76b7447b6f
+Containers:
+  payment-service:
+    Container ID:   docker://b68a9c1c6da31bc26296bd888c1717ff29d2aa7e024ef372055f2e60cdfb3133
+    Image:          payment-service:v1
+    Image ID:       docker://sha256:33702974aa840eda08c775dac02cb5ac57100ca44ec4198293684f9f6db587ed
+    Port:           8084/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:13:05 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      memory:  256Mi
+    Environment Variables from:
+      app-config   ConfigMap  Optional: false
+      app-secrets  Secret     Optional: false
+    Environment:
+      POSTGRES_DB:        payments_db
+      JAVA_TOOL_OPTIONS:  -Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-5fhbm (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-5fhbm:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  19m   default-scheduler  Successfully assigned default/payment-service-76b7447b6f-pr5jj to minikube
+  Normal  Pulled     19m   kubelet            spec.containers{payment-service}: Container image "payment-service:v1" already present on machine and can be accessed by the pod
+  Normal  Created    19m   kubelet            spec.containers{payment-service}: Container created
+  Normal  Started    19m   kubelet            spec.containers{payment-service}: Container started
+
+--- describe pod/postgres-699bf956d5-8hcvg ---
+Name:             postgres-699bf956d5-8hcvg
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 23 Apr 2026 23:00:14 +0300
+Labels:           app=postgres
+                  pod-template-hash=699bf956d5
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.51
+IPs:
+  IP:           10.244.0.51
+Controlled By:  ReplicaSet/postgres-699bf956d5
+Containers:
+  postgres:
+    Container ID:   docker://3caa4b4c0f8f36f26fcaa079c0b870051ec20ef8f3cc73aee0f31cf667a7543a
+    Image:          postgres:15
+    Image ID:       docker-pullable://postgres@sha256:29342cb52157b098821961d2c14eec3c019071f56a5d559e990cf07cf541ea9b
+    Port:           5432/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:11:11 +0300
+    Last State:     Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Thu, 23 Apr 2026 23:01:15 +0300
+      Finished:     Sat, 25 Apr 2026 00:09:01 +0300
+    Ready:          True
+    Restart Count:  1
+    Environment:
+      POSTGRES_USER:      <set to the key 'POSTGRES_USER' in secret 'app-secrets'>      Optional: false
+      POSTGRES_PASSWORD:  <set to the key 'POSTGRES_PASSWORD' in secret 'app-secrets'>  Optional: false
+    Mounts:
+      /docker-entrypoint-initdb.d from init-script (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-sdgx8 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  init-script:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      postgres-init
+    Optional:  false
+  kube-api-access-sdgx8:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason          Age   From     Message
+  ----    ------          ----  ----     -------
+  Normal  SandboxChanged  21m   kubelet  Pod sandbox changed, it will be killed and re-created.
+  Normal  Pulled          21m   kubelet  spec.containers{postgres}: Container image "postgres:15" already present on machine and can be accessed by the pod
+  Normal  Created         21m   kubelet  spec.containers{postgres}: Container created
+  Normal  Started         21m   kubelet  spec.containers{postgres}: Container started
+
+--- describe pod/rabbitmq-df57b6cb5-jpxhm ---
+Name:             rabbitmq-df57b6cb5-jpxhm
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 23 Apr 2026 23:01:39 +0300
+Labels:           app=rabbitmq
+                  pod-template-hash=df57b6cb5
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.60
+IPs:
+  IP:           10.244.0.60
+Controlled By:  ReplicaSet/rabbitmq-df57b6cb5
+Containers:
+  rabbitmq:
+    Container ID:   docker://41177eeb565e8ff0a2f4543517a39bfb765a0feccec8e4f74d2a96300206fe13
+    Image:          rabbitmq:3-management
+    Image ID:       docker-pullable://rabbitmq@sha256:e582c0bc7766f3342496d8485efb5a1df782b5ce3886ad017e2eaae442311f69
+    Ports:          5672/TCP, 15672/TCP
+    Host Ports:     0/TCP, 0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:11:11 +0300
+    Last State:     Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Thu, 23 Apr 2026 23:02:41 +0300
+      Finished:     Sat, 25 Apr 2026 00:09:03 +0300
+    Ready:          True
+    Restart Count:  1
+    Environment:
+      RABBITMQ_DEFAULT_USER:  <set to the key 'RABBIT_MQ_USER' in secret 'app-secrets'>      Optional: false
+      RABBITMQ_DEFAULT_PASS:  <set to the key 'RABBIT_MQ_PASSWORD' in secret 'app-secrets'>  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-q6gfv (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-q6gfv:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason          Age   From     Message
+  ----    ------          ----  ----     -------
+  Normal  SandboxChanged  21m   kubelet  Pod sandbox changed, it will be killed and re-created.
+  Normal  Pulled          21m   kubelet  spec.containers{rabbitmq}: Container image "rabbitmq:3-management" already present on machine and can be accessed by the pod
+  Normal  Created         21m   kubelet  spec.containers{rabbitmq}: Container created
+  Normal  Started         21m   kubelet  spec.containers{rabbitmq}: Container started
+
+--- describe pod/report-service-f84db764f-sqr7h ---
+Name:             report-service-f84db764f-sqr7h
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 25 Apr 2026 00:12:59 +0300
+Labels:           app=report-service
+                  pod-template-hash=f84db764f
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-04-25T00:12:58+03:00
+Status:           Running
+IP:               10.244.0.75
+IPs:
+  IP:           10.244.0.75
+Controlled By:  ReplicaSet/report-service-f84db764f
+Containers:
+  report-service:
+    Container ID:   docker://05cb1adddfe274118dab412ae796628892e92a578b3ece6a130a0ee0b94386d5
+    Image:          report-service:v1
+    Image ID:       docker://sha256:e57142cc1a54ff9ed65b4edda9f9968efe951c81b51fa0fca6870f30dbc41290
+    Port:           8086/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:13:07 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      memory:  256Mi
+    Environment Variables from:
+      app-config   ConfigMap  Optional: false
+      app-secrets  Secret     Optional: false
+    Environment:
+      POSTGRES_DB:        statistics_db
+      JAVA_TOOL_OPTIONS:  -Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-kqjdn (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-kqjdn:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  19m   default-scheduler  Successfully assigned default/report-service-f84db764f-sqr7h to minikube
+  Normal  Pulled     19m   kubelet            spec.containers{report-service}: Container image "report-service:v1" already present on machine and can be accessed by the pod
+  Normal  Created    19m   kubelet            spec.containers{report-service}: Container created
+  Normal  Started    19m   kubelet            spec.containers{report-service}: Container started
+
+--- describe pod/session-service-688ff754f7-nfbsw ---
+Name:             session-service-688ff754f7-nfbsw
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Sat, 25 Apr 2026 00:12:58 +0300
+Labels:           app=session-service
+                  pod-template-hash=688ff754f7
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-04-25T00:12:58+03:00
+Status:           Running
+IP:               10.244.0.70
+IPs:
+  IP:           10.244.0.70
+Controlled By:  ReplicaSet/session-service-688ff754f7
+Containers:
+  session-service:
+    Container ID:   docker://71df7830aa66f77e4ac1c227a5ba688040958da75137b69c0963790e7451cac1
+    Image:          session-service:v1
+    Image ID:       docker://sha256:cd88d2f896f782b3f91074945ecabae677cd3a2c1d12be6a6719f0270162a63e
+    Port:           8081/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 25 Apr 2026 00:13:05 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      memory:  256Mi
+    Environment Variables from:
+      app-config   ConfigMap  Optional: false
+      app-secrets  Secret     Optional: false
+    Environment:
+      POSTGRES_DB:        users_db
+      JAVA_TOOL_OPTIONS:  -Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-92cqh (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-92cqh:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  19m   default-scheduler  Successfully assigned default/session-service-688ff754f7-nfbsw to minikube
+  Normal  Pulled     19m   kubelet            spec.containers{session-service}: Container image "session-service:v1" already present on machine and can be accessed by the pod
+  Normal  Created    19m   kubelet            spec.containers{session-service}: Container created
+  Normal  Started    19m   kubelet            spec.containers{session-service}: Container started
+
+==================================================
+SERVICES
+==================================================
+NAME              TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)              AGE
+apache            LoadBalancer   10.110.22.80     <pending>     80:32697/TCP         30h
+booking-service   ClusterIP      10.99.142.127    <none>        8083/TCP             3h24m
+catalog           LoadBalancer   10.110.126.80    <pending>     8080:31626/TCP       30h
+customer          LoadBalancer   10.105.251.147   <pending>     8080:31143/TCP       30h
+gateway-service   ClusterIP      10.99.210.168    <none>        8087/TCP             3h24m
+hotel-service     ClusterIP      10.100.80.254    <none>        8082/TCP             3h24m
+kubernetes        ClusterIP      10.96.0.1        <none>        443/TCP              31h
+loyalty-service   ClusterIP      10.97.237.234    <none>        8085/TCP             3h24m
+order             LoadBalancer   10.103.246.114   <pending>     8080:31790/TCP       30h
+payment-service   ClusterIP      10.111.32.52     <none>        8084/TCP             3h24m
+postgres          ClusterIP      10.109.2.20      <none>        5432/TCP             25h
+rabbitmq          ClusterIP      10.103.161.242   <none>        5672/TCP,15672/TCP   25h
+report-service    ClusterIP      10.104.72.97     <none>        8086/TCP             3h24m
+session-service   ClusterIP      10.100.97.105    <none>        8081/TCP             3h24m
+
+--- describe service/apache ---
+Name:                     apache
+Namespace:                default
+Labels:                   run=apache
+Annotations:              <none>
+Selector:                 run=apache
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.110.22.80
+IPs:                      10.110.22.80
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  32697/TCP
+Endpoints:                10.244.0.49:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/booking-service ---
+Name:                     booking-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=booking-service
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.99.142.127
+IPs:                      10.99.142.127
+Port:                     <unset>  8083/TCP
+TargetPort:               8083/TCP
+Endpoints:                10.244.0.72:8083
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/catalog ---
+Name:                     catalog
+Namespace:                default
+Labels:                   run=catalog
+Annotations:              <none>
+Selector:                 run=catalog
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.110.126.80
+IPs:                      10.110.126.80
+Port:                     <unset>  8080/TCP
+TargetPort:               8080/TCP
+NodePort:                 <unset>  31626/TCP
+Endpoints:                10.244.0.47:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/customer ---
+Name:                     customer
+Namespace:                default
+Labels:                   run=customer
+Annotations:              <none>
+Selector:                 run=customer
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.105.251.147
+IPs:                      10.105.251.147
+Port:                     <unset>  8080/TCP
+TargetPort:               8080/TCP
+NodePort:                 <unset>  31143/TCP
+Endpoints:                10.244.0.59:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/gateway-service ---
+Name:                     gateway-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=gateway-service
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.99.210.168
+IPs:                      10.99.210.168
+Port:                     <unset>  8087/TCP
+TargetPort:               8087/TCP
+Endpoints:                10.244.0.69:8087
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/hotel-service ---
+Name:                     hotel-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=hotel-service
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.100.80.254
+IPs:                      10.100.80.254
+Port:                     <unset>  8082/TCP
+TargetPort:               8082/TCP
+Endpoints:                10.244.0.74:8082
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/loyalty-service ---
+Name:                     loyalty-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=loyalty-service
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.97.237.234
+IPs:                      10.97.237.234
+Port:                     <unset>  8085/TCP
+TargetPort:               8085/TCP
+Endpoints:                10.244.0.73:8085
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/order ---
+Name:                     order
+Namespace:                default
+Labels:                   run=order
+Annotations:              <none>
+Selector:                 run=order
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.103.246.114
+IPs:                      10.103.246.114
+Port:                     <unset>  8080/TCP
+TargetPort:               8080/TCP
+NodePort:                 <unset>  31790/TCP
+Endpoints:                10.244.0.48:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/payment-service ---
+Name:                     payment-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=payment-service
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.111.32.52
+IPs:                      10.111.32.52
+Port:                     <unset>  8084/TCP
+TargetPort:               8084/TCP
+Endpoints:                10.244.0.71:8084
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/postgres ---
+Name:                     postgres
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=postgres
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.109.2.20
+IPs:                      10.109.2.20
+Port:                     <unset>  5432/TCP
+TargetPort:               5432/TCP
+Endpoints:                10.244.0.51:5432
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/rabbitmq ---
+Name:                     rabbitmq
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=rabbitmq
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.103.161.242
+IPs:                      10.103.161.242
+Port:                     amqp  5672/TCP
+TargetPort:               5672/TCP
+Endpoints:                10.244.0.60:5672
+Port:                     management  15672/TCP
+TargetPort:               15672/TCP
+Endpoints:                10.244.0.60:15672
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/report-service ---
+Name:                     report-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=report-service
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.104.72.97
+IPs:                      10.104.72.97
+Port:                     <unset>  8086/TCP
+TargetPort:               8086/TCP
+Endpoints:                10.244.0.75:8086
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+--- describe service/session-service ---
+Name:                     session-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=session-service
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.100.97.105
+IPs:                      10.100.97.105
+Port:                     <unset>  8081/TCP
+TargetPort:               8081/TCP
+Endpoints:                10.244.0.70:8081
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+

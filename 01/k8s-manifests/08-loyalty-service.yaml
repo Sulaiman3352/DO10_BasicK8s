@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loyalty-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: loyalty-service }
+  template:
+    metadata:
+      labels: { app: loyalty-service }
+    spec:
+      containers:
+      - name: loyalty-service
+        image: loyalty-service:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8085
+        envFrom:
+        - configMapRef: { name: app-config }
+        - secretRef: { name: app-secrets }
+        env:
+        - name: POSTGRES_DB
+          value: "balances_db"
+        - name: JAVA_TOOL_OPTIONS
+          value: "-Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m"
+        resources:
+          limits:
+            memory: "512Mi"
+          requests:
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loyalty-service
+spec:
+  selector: { app: loyalty-service }
+  ports:
+  - port: 8085
+    targetPort: 8085

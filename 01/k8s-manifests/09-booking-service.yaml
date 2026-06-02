@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: booking-service }
+  template:
+    metadata:
+      labels: { app: booking-service }
+    spec:
+      containers:
+      - name: booking-service
+        image: booking-service:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8083
+        envFrom:
+        - configMapRef: { name: app-config }
+        - secretRef: { name: app-secrets }
+        env:
+        - name: POSTGRES_DB
+          value: "reservations_db"
+        - name: JAVA_TOOL_OPTIONS
+          value: "-Xmx256m -Xms128m -XX:MaxMetaspaceSize=128m"
+        resources:
+          limits:
+            memory: "512Mi"
+          requests:
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-service
+spec:
+  selector: { app: booking-service }
+  ports:
+  - port: 8083
+    targetPort: 8083
