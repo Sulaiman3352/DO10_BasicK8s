@@ -326,7 +326,7 @@ service's tolerance for unavailability, not a one-size answer.
                     └─────────────┘
 ```
 
-Everything lives in [`src/01/k8s-manifests/`](./01/k8s-manifests/):
+Everything lives in [`01/k8s-manifests/`](./01/k8s-manifests/):
 
 - `00-configmap.yaml` — non-sensitive shared config
 - `01-secret.yaml` — credentials + UUIDs + JWT keypair
