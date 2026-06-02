@@ -1,6 +1,6 @@
 # DO10 — Basic Kubernetes: Behind the Scenes
 
-> Taking the swarm out of the swarm. An engineering journal of porting
+> An engineering journal of porting
 > a seven-service Spring Boot booking app off Docker Swarm and onto a
 > Kubernetes cluster, by hand, one manifest at a time.
 
